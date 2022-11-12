@@ -69,7 +69,14 @@ const run = async() => {
             const searchValue= req.query.search
             console.log(searchValue)
             let query= {}
-         
+            if(searchValue.length) {
+                query= {
+                    $text:
+                      {
+                        $search: searchValue 
+                      }
+                }
+            }
             const cursor = servicesCollection.find(query).sort ({price : sorting})
             const result=await cursor.toArray()
             res.send(result)
